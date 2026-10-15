@@ -1,0 +1,56 @@
+{
+ "deepseek": {
+  "files_scanned": 116,
+  "blocks_found": 1883,
+  "too_small": 31,
+  "excluded_secret": 5,
+  "excluded_pii": 80,
+  "read_errors": 0,
+  "unique_blocks": 1267
+ },
+ "kimi": {
+  "files_scanned": 66,
+  "blocks_found": 0,
+  "too_small": 0,
+  "excluded_secret": 0,
+  "excluded_pii": 0,
+  "read_errors": 0,
+  "unique_blocks": 0
+ },
+ "gemini": {
+  "files_scanned": 829,
+  "blocks_found": 1604,
+  "too_small": 56,
+  "excluded_secret": 0,
+  "excluded_pii": 100,
+  "read_errors": 0,
+  "unique_blocks": 1077
+ },
+ "grok": {
+  "files_scanned": 334,
+  "blocks_found": 1519,
+  "too_small": 48,
+  "excluded_secret": 17,
+  "excluded_pii": 68,
+  "read_errors": 0,
+  "unique_blocks": 781
+ },
+ "oai": {
+  "files_scanned": 17,
+  "blocks_found": 3,
+  "too_small": 0,
+  "excluded_secret": 0,
+  "excluded_pii": 3,
+  "read_errors": 0,
+  "unique_blocks": 0
+ },
+ "codepen": {
+  "files_scanned": 455,
+  "blocks_found": 445,
+  "too_small": 10,
+  "excluded_secret": 1,
+  "excluded_pii": 97,
+  "read_errors": 0,
+  "unique_blocks": 330
+ }
+}
