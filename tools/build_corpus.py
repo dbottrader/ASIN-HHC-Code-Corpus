@@ -27,14 +27,24 @@ FENCE = re.compile(r'^```([A-Za-z0-9+#._-]*)\s*\n(.*?)^```[ \t]*$', re.M | re.S)
 HEADING = re.compile(r'^(#{1,6})\s+(.+)$', re.M)
 
 SECRET_PATTERNS = [
+    # OpenAI / project keys
     re.compile(r'sk-(live|test)-[A-Za-z0-9]{16,}'),
+    re.compile(r'sk-proj-[A-Za-z0-9\-_]{16,}'),
     re.compile(r'sk-[A-Za-z0-9]{20,}'),
+    # GitHub
     re.compile(r'ghp_[A-Za-z0-9]{20,}'),
     re.compile(r'gho_[A-Za-z0-9]{20,}'),
+    re.compile(r'github_pat_[A-Za-z0-9_]{20,}'),
+    # AWS / Slack / Google
     re.compile(r'AKIA[0-9A-Z]{16}'),
     re.compile(r'xox[abp]-[A-Za-z0-9-]{10,}'),
     re.compile(r'AIza[0-9A-Za-z_-]{35}'),
+    # Supabase
+    re.compile(r'sb_secret_[A-Za-z0-9]{16,}'),
+    re.compile(r'sb_publishable_[A-Za-z0-9]{16,}'),
+    # Private keys
     re.compile(r'-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----'),
+    # Generic key/token assignments
     re.compile(r'["\']?api[_-]?key["\']?\s*[:=]\s*["\'][A-Za-z0-9\-_]{16,}["\']', re.I),
     re.compile(r'["\']?secret[_-]?key["\']?\s*[:=]\s*["\'][A-Za-z0-9\-_]{16,}["\']', re.I),
     re.compile(r'["\']?(client[_-]?secret|access[_-]?token|auth[_-]?token)["\']?\s*[:=]\s*["\'][A-Za-z0-9\-_.]{16,}["\']', re.I),
@@ -180,10 +190,23 @@ def main():
         stats[u["sources"][0]["mirror"]]["unique_blocks"] += 1
 
     CORPUS.mkdir(parents=True, exist_ok=True)
+    # Fail closed on short-prefix collisions (F-03). Prefer full SHA-256 filenames.
+    short_map = {}
+    for u in uniq.values():
+        key = (u["lang"], u["sha8"])
+        short_map.setdefault(key, []).append(u["sha256"])
+    collisions = {k: v for k, v in short_map.items() if len(v) > 1}
+    if collisions:
+        raise RuntimeError(
+            f"SHA-8 filename collisions detected ({len(collisions)} groups). "
+            "Refusing to write; use full SHA-256 filenames."
+        )
     for u in uniq.values():
         langdir = CORPUS / u["lang"]
         langdir.mkdir(exist_ok=True)
-        (langdir / f"{u['sha8']}.{EXT.get(u['lang'], 'txt')}").write_text(u["content"], encoding="utf-8")
+        # Full hash prevents overwrite; sha8 retained in INDEX for compatibility.
+        fname = f"{u['sha256']}.{EXT.get(u['lang'], 'txt')}"
+        (langdir / fname).write_text(u["content"], encoding="utf-8")
         del u["content"]
     index = sorted(uniq.values(), key=lambda u: (-u["occurrences"], u["sha8"]))
     (OUT / "INDEX.json").write_text(json.dumps(index, indent=1), encoding="utf-8")
