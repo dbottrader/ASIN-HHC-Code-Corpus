@@ -1,0 +1,45 @@
+{
+  "summary": {
+    "files_scanned": 3455,
+    "bytes_scanned": 11019631,
+    "secret_hit_count": 6,
+    "secret_hits_by_pattern": {
+      "sk_proj": 5,
+      "github_pat": 1
+    },
+    "email_hit_count": 0,
+    "phone_hit_count": 0,
+    "sha8_collision_groups": 0,
+    "true_content_duplicate_groups": 0,
+    "errors": 0,
+    "by_lang": {
+      "unknown": 1043,
+      "html": 576,
+      "javascript": 414,
+      "python": 375,
+      "bash": 278,
+      "json": 250,
+      "yaml": 225,
+      "jsx": 55,
+      "markdown": 45,
+      "css": 42,
+      "sql": 31,
+      "text": 29,
+      "typescript": 11,
+      "solidity": 10
+    }
+  },
+  "secret_hits_redacted": [
+    {"path": "html/5ed47b4c.html", "pattern": "sk_proj", "line": 30},
+    {"path": "html/8feebff1.html", "pattern": "sk_proj", "line": 87},
+    {"path": "html/9cf040ac.html", "pattern": "sk_proj", "line": 35},
+    {"path": "html/bfb33300.html", "pattern": "sk_proj", "line": 81},
+    {"path": "html/fd3d51cc.html", "pattern": "sk_proj", "line": 79},
+    {"path": "unknown/c1a9ea36.txt", "pattern": "github_pat", "line": 1}
+  ],
+  "email_hits_redacted": [],
+  "phone_hits_redacted": [],
+  "sha8_collisions": [],
+  "true_content_duplicate_groups": 0,
+  "errors": []
+}
