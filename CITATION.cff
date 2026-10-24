@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "ASIN HHC Code Corpus"
+authors:
+  - given-names: Dennis
+    family-names: Christie
+date-released: 2026-10-15
+license: MIT
+repository-code: "https://github.com/dbottrader/ASIN-HHC-Code-Corpus"
